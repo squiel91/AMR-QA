@@ -6,6 +6,7 @@ class Graph:
 	def __init__(self):
 		self.nodes = defaultdict(list)
 		self.root = None
+		self.unique_id = 1000
 
 	def add_node(self, node):	
 		self.nodes[node] = self.nodes[node]
@@ -15,7 +16,12 @@ class Graph:
 	def nodes(self):
 		return self.nodes.keys() 
 
-	def add_edge(self, origin, destination, label=None):
+	# terminal means that destination will be fixed and wont have childs 
+	# and origin will be its only parent
+	def add_edge(self, origin, destination, label=None, terminal=False):
+		if terminal:
+			destination += "|terminal|" + str(self.unique_id)
+			self.unique_id += 1
 		self.add_node(origin)
 		self.add_node(destination)
 		adjacency = destination
@@ -34,7 +40,7 @@ class Graph:
 		if node not in visited:
 			visited.append(node)
 			if len(lable) > 0: lable += ' '
-			print(' ' * level * 2 + lable + node)
+			print(' ' * level * 2 + lable + node.split("|terminal|")[0])
 			for adjacency in self.adjacents(node):
 				adjacent_node = None
 				label = None

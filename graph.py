@@ -3,6 +3,7 @@ from collections import defaultdict
 # representation of a graph that allows labeling (optional) and reentrancy 
 
 class Graph:
+
 	def __init__(self):
 		self.nodes = defaultdict(list)
 		self.root = None
@@ -13,10 +14,32 @@ class Graph:
 		if not self.root:
 			self.root = node
 
-	def nodes(self):
-		return self.nodes.keys() 
+	def remove_node(self, node):
+		for node_iter in self.nodes.keys():
+			if get_value(node_iter) == node:
+				del self.nodes[node_iter]
+				break
 
-	# terminal means that destination will be fixed and wont have childs 
+	def update_destination(self, node_old, node_new):
+		for node in self.nodes.keys():
+			node_adjacents = self.nodes[node]
+			new_node_adjacents = []
+			for adjacency in node_adjacents:
+				new_adjacent_node = adjacency
+				if type(adjacency) == tuple:
+					label, adjacent_node = adjacency
+					if get_value(adjacent_node) == node_old:
+						new_adjacent_node = (label, node_new)
+				else: 
+					if get_value(adjacency) == node_old:
+						new_node_adjacents = node_new
+				new_node_adjacents.append(new_adjacent_node)
+			self.nodes[node] = new_node_adjacents
+
+	def get_nodes(self):
+		return [get_value(node) for node in self.nodes.keys()]
+
+	# terminal means that destination will be a fixed leaf: wont have childs 
 	# and origin will be its only parent
 	def add_edge(self, origin, destination, label=None, terminal=False):
 		if terminal:
@@ -49,15 +72,8 @@ class Graph:
 				else:
 					adjacent_node = adjacency
 				visited = self.show_recursively(adjacent_node, visited, level + 1, label)
-			return visited
+		return visited
 
-# # tests	
-# graph = Graph()
-# graph.add_edge("p / picture", "i / it", ":domain")
-# graph.add_edge("p / picture", "b2 / boa", ":topic")
-# graph.add_edge("b2 / boa", "c2 / constrictor", ":mod") 
-# graph.add_edge("b2 / boa", "s / swallow-01", ":ARG0-of") 
-# graph.add_edge("s / swallow-01", "a / animal", ":ARG1") 
-
-# graph.show()
+def get_value(value):
+		return value.split('|terminal|')[0]
 

@@ -11,14 +11,15 @@ print(
 '''
 QUESTION & ANSWERING to Little Prince using AMR
 ------------------------------------------------------------------
-Luis Chiruzzo (@luischir), Ezequiel Santiago Sanchez (@squiel91)
-2016, Universidad de la República, Montevideo, Uruguay
-------------------------------------------------------------------
-''')
+Luis Chiruzzo (@luischiruzzo), Ezequiel Santiago Sanchez (@squiel91)
+2016, Universidad de la Republica, Montevideo, Uruguay
+------------------------------------------------------------------''')
+
 while True:
-	inquire = input("Enter a question or fact: ")
-	print(inquire)
+	inquire = input("\n> Enter a question (between quotes!): ")
+	print("\nProcessing, sorry about that.\n---------------\n\n")
 	inquire_graph = AMR.parse(inquire)
+	print("---------------\n\nDone Processing!\n")
 	respond = ask_me.answer(inquire_graph)
 	print("Answer: \n{}".format(respond))
 

@@ -21,6 +21,7 @@ def run_command(command):
 model_file = 'LDC2014T12.m'
 
 def parse(sentence):
+	run_command("cd camr\nfind . -name 'input_sentence_file*' -exec rm \{\} \;")
 	input_sentence_file = "input_sentence_file.txt"
 	generate_file(sentence, input_sentence_file, "camr")
 	run_command("cd camr\npython amr_parsing.py -m preprocess {}".format(input_sentence_file))

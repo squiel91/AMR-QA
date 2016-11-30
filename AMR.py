@@ -57,5 +57,7 @@ def amr_2_graph(sentence, graph):
 
 def parse(sentence):
 	parsed_plain_string = camr.parse(sentence)
-	return amr_2_graph(parsed_plain_string)
+	g = graph.Graph()
+	amr_2_graph(parsed_plain_string, g)
+	return g
 

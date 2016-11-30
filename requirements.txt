@@ -1,0 +1,4 @@
+bllipparser==2016.9.11
+nltk==3.2.1
+numpy==1.11.2
+six==1.10.0

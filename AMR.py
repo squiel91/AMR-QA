@@ -1,5 +1,6 @@
 import re
 import graph
+import camr_interface as camr
 
 def process_reentrancy(graph):
 	for node_var in graph.get_nodes():
@@ -54,4 +55,7 @@ def amr_2_graph(sentence, graph):
 		graph.add_edge(root, child_node, argument, terminal=terminal)
 	return root
 
+def parse(sentence):
+	parsed_plain_string = camr.parse(sentence)
+	return amr_2_graph(parsed_plain_string)
 

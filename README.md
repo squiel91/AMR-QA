@@ -6,9 +6,9 @@ Ask question about the Little Prince and get the answer. Implemented using [AMR]
 ## Instalation
 Tested with Python 2.7.12 (CAMR is still not ported to Python 3) and Ubuntu.
 
-Before prociding make sure _CAMR: A transition-based AMR Parser_ is working in your computer (https://github.com/c-amr/camr). A requirements.txt file is provided in root to help you install dependencies of CAMR, but is not necesarry is already installed. Apart from CAMR, this project doesn't have any dependency.
+Before prociding make sure _CAMR: A transition-based AMR Parser_ is working on your computer (https://github.com/c-amr/camr). A requirements.txt file is provided to help you install dependencies of CAMR, but is not necesarry if is already installed. Apart from CAMR, this project doesn't have any dependency.
 
-**Important:** Clone CAMR Github repository on the root folder (_AMR-QA/camr_).
+**Important:** Clone CAMR Github repository in the root folder (_AMR-QA/camr_).
 Then place the model file (as describe in CAMR repository) inside the carm folder with the name 'LDC2014T12.m' (_AMR-QA/camr/LDC2014T12.m_)
 
 Finally, run it:

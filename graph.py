@@ -1,7 +1,5 @@
 from collections import defaultdict
 
-# representation of a graph that allows labeling (optional) and reentrancy 
-
 class Graph:
 
 	def __init__(self):
@@ -54,7 +52,7 @@ class Graph:
 
 	def adjacents(self, origin, label=None):
 		if not label:
-			return self.nodes[origin]
+			return search_ingnoring_vars(self.nodes, origin)
 		else:
 			for adjacency in search_ingnoring_vars(self.nodes, origin):
 				if type(adjacency) == tuple and adjacency[0] == label:
@@ -66,12 +64,10 @@ class Graph:
 			self.show_recursively(self.root, [], 0)
 
 	def partial_match(self, to_match):
-
 		for to_match_node in [get_node_without_var(n) for n in to_match.get_nodes()]:
 			if to_match_node not in [get_node_without_var(n).replace(" ", "") for n in self.get_nodes()]:
 				return False
 			else:
-
 				if not included_adjacency(to_match.adjacents(to_match_node), self.adjacents(to_match_node)):
 					return False
 		
@@ -79,11 +75,12 @@ class Graph:
 
 			
 	def show_recursively(self, node, visited, level, lable=''):
+		if len(lable) > 0: 
+			lable += ' '
+		print(' ' * level * 2 + lable + node.split("|terminal|")[0])
 		if node not in visited:
 			visited.append(node)
-			if len(lable) > 0: lable += ' '
-			print(' ' * level * 2 + lable + node.split("|terminal|")[0])
-			for adjacency in self.adjacents(node):
+			for adjacency in self.nodes[node]:
 				adjacent_node = None
 				label = None
 				if type(adjacency) == tuple:
@@ -124,7 +121,7 @@ def get_node_without_var(node):
 def normalize_adjacency(the_list):
 	new_list = []
 	for elem in the_list:
-		new_list.append((get_node_without_var(elem[0]),get_value(elem[1])))
+		new_list.append((elem[0],get_node_without_var(get_value(elem[1]))))
 	return new_list
 
 def included_adjacency(listA, listB):

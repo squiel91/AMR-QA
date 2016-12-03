@@ -18,6 +18,7 @@ Luis Chiruzzo (@luischiruzzo), Ezequiel Santiago Sanchez (@squiel91)
 while True:
 	inquire = input("\n> Enter a question (between quotes!): ")
 	inquire = inquire.lower()
+
 	print("\nProcessing.\n---------------")
 	inquire_graph = AMR.parse(inquire)
 	print("---------------\nDone Processing!\n")

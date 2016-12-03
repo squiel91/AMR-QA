@@ -1,3 +1,4 @@
+from pdb import set_trace as st
 
 q = [
 	('for who', [':ARG2']),
@@ -41,7 +42,6 @@ class Answer:
 			if corpus_sent.partial_match(question_AMR_graph):
 				for relation in relations_inquired:
 					answer_tree = corpus_sent.adjacents(question_AMR_graph.root, label=relation)
-					
 					corpus_sent.change_root(answer_tree)
 					if answer_tree:
 						print("----------------")
@@ -49,5 +49,4 @@ class Answer:
 						print("{}: {}".format(phrase_index, self.originals[phrase_index - 1]))
 						answers_quantity += 1
 						
-		# question_or_fact_AMR_graph.show()
 		print("\n{} answer(s)".format(answers_quantity))

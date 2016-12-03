@@ -49,6 +49,7 @@ def amr_2_graph(sentence, graph):
 			subgraph, sentence = find_closing_parenthesis(sentence)
 			child_node = amr_2_graph(subgraph, graph)
 		else:
+			
 			child_node, sentence = re.search('([^ ]+) ?(:.*)?', sentence).group(1, 2)
 			if not sentence: sentence = ""
 			terminal = True

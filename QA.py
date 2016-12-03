@@ -4,8 +4,8 @@ from answer import Answer
 import AMR
 
 # Parse module
-little_prince = little_prince_corpus.AMR_graphs('amr-bank-v1.6.xml')
-ask_me = Answer(little_prince)
+little_prince, originals = little_prince_corpus.AMR_graphs('amr-bank-v1.6.xml')
+ask_me = Answer(little_prince, originals)
 
 print(
 '''
@@ -17,10 +17,10 @@ Luis Chiruzzo (@luischiruzzo), Ezequiel Santiago Sanchez (@squiel91)
 
 while True:
 	inquire = input("\n> Enter a question (between quotes!): ")
-	print("\nProcessing, sorry about that.\n---------------\n\n")
+	inquire = inquire.lower()
+	print("\nProcessing.\n---------------")
 	inquire_graph = AMR.parse(inquire)
-	print("---------------\n\nDone Processing!\n")
-	respond = ask_me.answer(inquire_graph)
-	print("Answer: \n{}".format(respond))
+	print("---------------\nDone Processing!\n")
+	respond = ask_me.answer(inquire_graph, inquire)
 
 

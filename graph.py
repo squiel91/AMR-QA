@@ -52,12 +52,31 @@ class Graph:
 			adjacency = (label, destination)
 		self.nodes[origin].append(adjacency)
 
-	def adjacents(self, origin):
-		return self.nodes[origin]
+	def adjacents(self, origin, label=None):
+		if not label:
+			return self.nodes[origin]
+		else:
+			for adjacency in search_ingnoring_vars(self.nodes, origin):
+				if type(adjacency) == tuple and adjacency[0] == label:
+					return adjacency[1]
+			return None
 
 	def show(self):
 		if self.root:
 			self.show_recursively(self.root, [], 0)
+
+	def partial_match(self, to_match):
+
+		for to_match_node in [get_node_without_var(n) for n in to_match.get_nodes()]:
+			if to_match_node not in [get_node_without_var(n).replace(" ", "") for n in self.get_nodes()]:
+				return False
+			else:
+
+				if not included_adjacency(to_match.adjacents(to_match_node), self.adjacents(to_match_node)):
+					return False
+		
+		return True
+
 			
 	def show_recursively(self, node, visited, level, lable=''):
 		if node not in visited:
@@ -74,6 +93,45 @@ class Graph:
 				visited = self.show_recursively(adjacent_node, visited, level + 1, label)
 		return visited
 
+	def change_root(self, new_root):
+
+		for node in self.nodes.keys():
+			try:
+				if node == new_root or new_root == get_node_without_var(dic_value):
+					self.root = node
+					return
+			except Exception:
+				pass
+
+def search_ingnoring_vars(dic, node):
+	node = get_node_without_var(node)
+	for dic_value in dic:
+		try:
+			if node == get_node_without_var(dic_value):
+				return dic[dic_value]
+		except Exception:
+			pass
+
 def get_value(value):
-		return value.split('|terminal|')[0]
+	return value.split('|terminal|')[0]
+
+def get_node_without_var(node):
+	try:
+		return node.split(' / ')[1].replace(" ", "")
+	except:
+		return node
+
+def normalize_adjacency(the_list):
+	new_list = []
+	for elem in the_list:
+		new_list.append((get_node_without_var(elem[0]),get_value(elem[1])))
+	return new_list
+
+def included_adjacency(listA, listB):
+	listA = normalize_adjacency(listA)
+	listB = normalize_adjacency(listB)
+	for elementA in listA:
+		if not elementA in listB:
+			return False
+	return True
 
